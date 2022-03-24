@@ -11,4 +11,3 @@ fn should_pass(){
 fn should_fail(){
     unimplemented!();
 }
-
