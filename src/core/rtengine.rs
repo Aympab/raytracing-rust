@@ -1,18 +1,21 @@
+use crate::utils::geometry::Point;
+
 pub struct RTEngine{
-    pub p_camera : [f32; 3],
-    pub p_pixels : Vec<[f32; 3]>
+    pub p_camera : Point,
+    pub p_pixels : Vec<Point>
 }
 
 impl RTEngine {
     pub fn run_engine(&mut self) {
-        println!("{:?}", self.p_camera);
+        println!("Running engine");
     }
 }
 
 
 #[test]
-fn basic_instanciation() {
-    let origin = [0.0f32, 0.0f32, 0.0f32];
+fn default_instanciation() {
+    let origin = Point{ ..Default::default() };
+
     let origins = Vec::from([origin, origin, origin]);
 
     let rte = RTEngine{

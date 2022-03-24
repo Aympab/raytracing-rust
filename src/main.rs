@@ -1,12 +1,15 @@
 // mod core;
 // use crate::core::rtengine::RTEngine;
 // use 
-mod core;
+pub mod core;
 use crate::core::rtengine::RTEngine;
+
+pub mod utils;
+use crate::utils::geometry::Point;
 
 fn main(){
     let mut rte = RTEngine{
-        p_camera : [10.0f32, 0.0f32, 0.0f32],
+        p_camera : Point{ ..Default::default() },
         p_pixels : Vec::new()
     };
 
