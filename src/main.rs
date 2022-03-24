@@ -11,8 +11,8 @@ pub mod scene;
 
 fn main(){
     let mut rte = RTEngine{
-        p_camera : Point{ ..Default::default() },
-        p_pixels : Vec::new()
+        pos_camera : Point{ ..Default::default() },
+        pos_pixels : Vec::new()
     };
 
     rte.run_engine();

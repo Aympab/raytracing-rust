@@ -1,5 +1,11 @@
 use std::ops::Add;
 
+#[derive(Debug, Copy, Clone, Default)]
+pub struct Line {
+    pub p1 : Point,
+    pub p2 : Point
+}
+
 #[derive(Debug, Copy, Clone)]
 /// Point represents a basic 3D point in space
 pub struct Point {

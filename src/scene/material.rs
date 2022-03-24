@@ -4,5 +4,6 @@ use crate::utils::color::*;
 pub struct Material {
     pub color : ColorComponents,
     pub reflexion : f32,
-    pub absrobti : f32,
+    pub refraction : f32,
+    pub absorbtion : f32,
 }
