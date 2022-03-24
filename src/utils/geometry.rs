@@ -1,6 +1,5 @@
 use std::ops::Add;
 
-// #[derive(Default)]
 #[derive(Debug, Copy, Clone)]
 /// Point represents a basic 3D point in space
 pub struct Point {
