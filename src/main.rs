@@ -1,8 +1,9 @@
 mod core;
+use crate::core::rtengine::RTEngine;
 
 fn main(){
-    let mut rte = core::rtengine::RTEngine{
-        p_camera : [0.0f32, 0.0f32, 0.0f32],
+    let mut rte = RTEngine{
+        p_camera : [10.0f32, 0.0f32, 0.0f32],
         p_pixels : Vec::new()
     };
 
