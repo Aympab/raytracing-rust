@@ -43,7 +43,7 @@ fn main() {
   let mut island_manager = IslandManager::new();
   let mut broad_phase = BroadPhase::new();
   let mut narrow_phase = NarrowPhase::new();
-  let mut joint_set = ImpulseJointSet::new();
+  let mut joint_set = JointSet::new();
   let mut ccd_solver = CCDSolver::new();
   let physics_hooks = ();
   let event_handler = ();
