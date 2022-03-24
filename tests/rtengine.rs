@@ -1,12 +1,12 @@
-// // use crate::core::rtengine;
-// // mod core;
-// // use super::core;
-// // use rtengine;
-// // mod super::src;s
-// use raytracing_rust;
+// mod rust_rt;
+// use rust_rt::rtengine::RTEngine;
+
 
 // #[cfg(test)]
 // mod rtengine_tests{
+//     // mod super::rtengine;
+//     // use crate::core::rtengine;
+
 //     #[test]
 //     fn basic_instanciation() {
 //         // let rte = rtengine::RTEngine{

@@ -1,5 +1,5 @@
 [package]
-name = "raytracing_rust"
+name = "rust_rt"
 version = "0.0.1"
 edition = "2021"
 
