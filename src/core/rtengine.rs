@@ -22,7 +22,6 @@ impl RTEngine {
         let mut colors = Array2::<RGBColor>::default((width,hieght));
 
         for ((i, j), p) in self.pos_pixels.indexed_iter() {
-        // for p in &self.pos_pixels {
             let ray = Line{
                 p1 : self.pos_camera,
                 p2 : *p
@@ -41,10 +40,11 @@ fn color_contribution(ray : Line, depth : i32) -> RGBColor {
     if depth > MAX_DEPTH { return color };
     let _p = intersect(ray);
     // if &p == std::ptr::null { return color};
-
+    //TODO:
     return color
 }
 
 fn intersect(_ray : Line) -> Point{
+    //TODO :
     Point { ..Default::default() }
 }

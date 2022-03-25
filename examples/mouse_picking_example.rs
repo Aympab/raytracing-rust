@@ -1,3 +1,4 @@
+//Example of the mouse picker tool
 use bevy::prelude::*;
 use bevy_mod_picking::{
     DebugCursorPickingPlugin, DebugEventsPickingPlugin, DefaultPickingPlugins, PickableBundle,
@@ -7,6 +8,7 @@ use bevy_mod_picking::{
 fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
+            // present_mode: PresentMode::Immediate, // Disabled for this demo to reduce input latency
             ..Default::default()
         })
         .add_plugins(DefaultPlugins)
