@@ -7,16 +7,3 @@ pub struct Light {
     pub color : ColorComponents,
     pub pos : Point,
 }
-
-#[cfg(test)]
-mod light_tests{
-    use crate::scene::light::Light;
-    use crate::utils::geometry::Point;
-
-    #[test]
-    fn default_instanciation() {
-        let light = Light{..Default::default()};
-
-        assert_eq!(light.pos, Point{..Default::default()});
-    }
-}
