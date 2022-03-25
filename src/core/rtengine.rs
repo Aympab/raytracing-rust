@@ -10,7 +10,8 @@ pub struct RTEngine{
 }
 
 impl RTEngine {
-    pub fn run_engine(&mut self) -> Vec<RGBColor> {
+    ///The simplest ray tracing algorithm : path tracing
+    pub fn path_tracing(&mut self) -> Vec<RGBColor> {
         let mut colors = Vec::with_capacity(self.pos_pixels.len());
 
         for p in &self.pos_pixels {
