@@ -14,20 +14,23 @@ pub struct RTEngine{
 
 impl RTEngine {
     ///The simplest ray tracing algorithm : path tracing
-    pub fn path_tracing(&mut self) -> Vec<RGBColor> {
+    pub fn path_tracing(&mut self) ->  Array2::<RGBColor> {
 
-        // let a = Array2::<RGBColor>::zeros(shape) s
+        let width : usize = self.pos_pixels.shape()[0];
+        let hieght : usize = self.pos_pixels.shape()[1];
 
-        let mut colors = Vec::with_capacity(self.pos_pixels.len());
+        let mut colors = Array2::<RGBColor>::default((width,hieght));
 
-        for p in &self.pos_pixels {
+        for ((i, j), p) in self.pos_pixels.indexed_iter() {
+        // for p in &self.pos_pixels {
             let ray = Line{
                 p1 : self.pos_camera,
                 p2 : *p
             };
-            println!("Pushing mamene");
-            colors.push(color_contribution(ray, 0));
+
+            colors[[i,j]] = color_contribution(ray, 0);
         }
+
         return colors
     }
 }
