@@ -1,4 +1,5 @@
 //Example of the mouse picker tool
+//NEED TO ACTIVATE becy_mod_picking IN Cargo.toml !!
 use bevy::prelude::*;
 use bevy_mod_picking::{
     DebugCursorPickingPlugin, DebugEventsPickingPlugin, DefaultPickingPlugins, PickableBundle,
