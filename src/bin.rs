@@ -20,8 +20,8 @@ fn main() {
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .add_startup_stage("camera_spawn_stage", SystemStage::single(camera_spawn))
         .run();
-}
 
+}
 /// set up a simple 3D scene
 fn setup(
     mut commands: Commands,
@@ -30,7 +30,9 @@ fn setup(
 ) {
     //We add the ressources "Materials" type we made so bevy knows them
     commands.insert_resource(Materials {
-        sphere_material: materials.add(Color::rgb(0.2, 0.4, 0.6).into()),
+        sphere_material_red: materials.add(Color::rgb(0.8, 0.1, 0.1).into()),
+        sphere_material_green: materials.add(Color::rgb(0.1, 0.8, 0.1).into()),
+        sphere_material_blue: materials.add(Color::rgb(0.1, 0.1, 0.8).into()),
     });
 
     //Same for the meshing
