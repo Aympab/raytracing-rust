@@ -37,32 +37,24 @@ pub fn sphere_spawn(
     meshes: Res<Meshes>,
 ) {
 
+    let mut spawn_spheres = |pos : Vec3, mat : Handle<StandardMaterial>| {
+    commands.spawn_bundle(PbrBundle {
+        mesh: meshes.sphere_mesh.clone(),
+        material: mat, //materials.sphere_material_red.clone(),
+        transform: Transform::from_translation(pos),
+        ..Default::default()
+    })
+    .insert(BevySphereC);
+    };
+
     //Red sphere
-    commands.spawn_bundle(PbrBundle {
-        mesh: meshes.sphere_mesh.clone(),
-        material: materials.sphere_material_red.clone(),
-        transform: Transform::from_xyz(0.0, 0.0, 0.0),
-        ..Default::default()
-    })
-    .insert(BevySphereC);
-
+    spawn_spheres(Vec3::new(0.0, 0.0, 0.0), materials.sphere_material_red.clone());
+    
     //Blue sphere
-    commands.spawn_bundle(PbrBundle {
-        mesh: meshes.sphere_mesh.clone(),
-        material: materials.sphere_material_blue.clone(),
-        transform: Transform::from_xyz(1.0, 0.8, -1.0),
-        ..Default::default()
-    })
-    .insert(BevySphereC);
-
+    spawn_spheres(Vec3::new(1.0, 0.8, -1.0), materials.sphere_material_blue.clone());
+    
     //Green sphere
-    commands.spawn_bundle(PbrBundle {
-        mesh: meshes.sphere_mesh.clone(),
-        material: materials.sphere_material_green.clone(),
-        transform: Transform::from_xyz(-1.0, 0.53, -0.6),
-        ..Default::default()
-    })
-    .insert(BevySphereC);
+    spawn_spheres(Vec3::new(-1.0, 0.53, -0.6), materials.sphere_material_green.clone());
 }
 
 pub fn plane_spawn(
