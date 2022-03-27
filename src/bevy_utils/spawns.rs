@@ -1,16 +1,16 @@
 use bevy::prelude::*;
 use crate::bevy_utils::resources::*;
 
-use super::components::BevyLightC;
+use super::components::{BevyLightC, BevyCameraC, BevySphereC};
 
 pub fn camera_spawn(
     mut commands: Commands,
-    cam: Res<BevyCamera>,
 ){
     commands.spawn_bundle(PerspectiveCameraBundle {
-        transform: Transform::from_translation(cam.pos).looking_at(cam.focal, Vec3::Y),
+        transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
-    });
+    })
+    .insert(BevyCameraC);
 }
 
 pub fn light_spawn(
@@ -43,7 +43,8 @@ pub fn sphere_spawn(
         material: materials.sphere_material_red.clone(),
         transform: Transform::from_xyz(0.0, 0.0, 0.0),
         ..Default::default()
-    });
+    })
+    .insert(BevySphereC);
 
     //Blue sphere
     commands.spawn_bundle(PbrBundle {
@@ -51,7 +52,8 @@ pub fn sphere_spawn(
         material: materials.sphere_material_blue.clone(),
         transform: Transform::from_xyz(1.0, 0.8, -1.0),
         ..Default::default()
-    });
+    })
+    .insert(BevySphereC);
 
     //Green sphere
     commands.spawn_bundle(PbrBundle {
@@ -59,7 +61,8 @@ pub fn sphere_spawn(
         material: materials.sphere_material_green.clone(),
         transform: Transform::from_xyz(-1.0, 0.53, -0.6),
         ..Default::default()
-    });
+    })
+    .insert(BevySphereC);
 }
 
 pub fn plane_spawn(

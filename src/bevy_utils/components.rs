@@ -1,9 +1,14 @@
 use bevy::prelude::Component;
 // use glam::Vec3;
 
-// // #[derive(Clone, Copy)]
 #[derive(Component)]
 pub struct BevyLightC;
+
+#[derive(Component)]
+pub struct BevyCameraC;
+
+#[derive(Component)]
+pub struct BevySphereC;
 // #[derive(Component)] 
 // pub struct LightPosC(Vec3);
 // #[derive(Component)]

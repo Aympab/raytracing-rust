@@ -2,8 +2,8 @@ pub mod bevy_utils;
 pub mod utils;
 
 use bevy::prelude::*;
-use bevy_utils::resources::BevyCamera;
-use bevy_utils::resources::BevyLight;
+// use bevy_utils::resources::BevyCamera;
+// use bevy_utils::resources::BevyLight;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
@@ -46,8 +46,4 @@ fn setup(
         sphere_mesh: meshes.add(Mesh::from(shape::UVSphere::default())),
         plane_mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
     });
-
-    //Same for camera & light
-    commands.insert_resource(BevyCamera::default());
-    commands.insert_resource(BevyLight::default());
 }

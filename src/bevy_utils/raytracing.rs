@@ -1,22 +1,30 @@
 use bevy::prelude::*;
 
-use super::components::BevyLightC;
+use super::components::{BevyLightC, BevyCameraC, BevySphereC};
 
 ///Gets all the positions and objects components from the scene
 /// and feed them to the raytracing engine
 pub fn compute_rt(
     keyboard_input: Res<Input<KeyCode>>,
-    query : Query<(& Transform, With<BevyLightC>)>
+    light_query : Query<(&Transform, With<BevyLightC>)>,
+    cam_query : Query<(&Transform, With<BevyCameraC>)>,
+    // object_query : Query<(&Transform, &Handle<Mesh>, &Handle<StandardMaterial>, With<BevySphereC>)>
 ){
     // let Ok((tr, _)) = query.single_mut();
     
-    let (tr, _) = query.single();
+    let (light_tr, _) = light_query.single();
+    let (cam_tr, _) = cam_query.single();
 
     if keyboard_input.just_released(KeyCode::Space){
         println!("Light position : {}, {}, {}",
-            tr.translation.x,
-            tr.translation.y,
-            tr.translation.z);
+            light_tr.translation.x,
+            light_tr.translation.y,
+            light_tr.translation.z);
+
+        println!("Cam position : {}, {}, {}",
+            cam_tr.translation.x,
+            cam_tr.translation.y,
+            cam_tr.translation.z);
     }
 
 }
