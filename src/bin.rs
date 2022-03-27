@@ -2,31 +2,9 @@ pub mod utils;
 pub mod bevy_utils;
 
 use bevy::prelude::*;
-// use bevy_utils::mesh::create_sphere;
-use utils::geometry::Point;
+use bevy_utils::mesh::*;
 
-struct Materials {
-    sphere_material : Handle<StandardMaterial>,
-}
 
-struct Meshes {
-    sphere_mesh : Handle<Mesh>,
-}
-
-fn sphere_spawn(
-    mut commands : Commands,
-    materials : Res<Materials>,
-    meshes : Res<Meshes>
-    ){
-    
-    commands
-    .spawn_bundle(PbrBundle {
-        mesh: meshes.sphere_mesh.clone(),
-        material: materials.sphere_material.clone(),
-        transform: Transform::from_xyz(2.0, 0.6, -2.0),
-        ..Default::default()
-    });
-}
 
 fn main() {
     App::new()
@@ -38,6 +16,7 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_startup_system(setup)
+        .add_startup_stage("sphere_spawning_stage", SystemStage::single(sphere_spawn))
         .run();
 }
 
@@ -89,15 +68,15 @@ fn setup(
         //     ..Default::default()
         // });
 
-        // commands.spawn_bundle(PointLightBundle {
-        // point_light: PointLight {
-        //     intensity: 1500.0,
-        //     shadows_enabled: true,
-        //     ..Default::default()
-        // },
-        // transform: Transform::from_xyz(4.0, 8.0, 4.0),
-        // ..Default::default()
-    // });
+        commands.spawn_bundle(PointLightBundle {
+        point_light: PointLight {
+            intensity: 1500.0,
+            shadows_enabled: true,
+            ..Default::default()
+        },
+        transform: Transform::from_xyz(4.0, 8.0, 4.0),
+        ..Default::default()
+    });
 
     // camera
     commands
