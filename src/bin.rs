@@ -2,9 +2,31 @@ pub mod utils;
 pub mod bevy_utils;
 
 use bevy::prelude::*;
-use bevy_utils::mesh::create_sphere;
+// use bevy_utils::mesh::create_sphere;
 use utils::geometry::Point;
 
+struct Materials {
+    sphere_material : Handle<StandardMaterial>,
+}
+
+struct Meshes {
+    sphere_mesh : Handle<Mesh>,
+}
+
+fn sphere_spawn(
+    mut commands : Commands,
+    materials : Res<Materials>,
+    meshes : Res<Meshes>
+    ){
+    
+    commands
+    .spawn_bundle(PbrBundle {
+        mesh: meshes.sphere_mesh.clone(),
+        material: materials.sphere_material.clone(),
+        transform: Transform::from_xyz(2.0, 0.6, -2.0),
+        ..Default::default()
+    });
+}
 
 fn main() {
     App::new()
@@ -25,6 +47,18 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
+
+    commands.insert_resource(Materials{
+        sphere_material : materials.add(Color::rgb(0.2, 0.4, 0.6).into())
+    });
+
+    commands.insert_resource(Meshes {
+        sphere_mesh : meshes.add(
+            Mesh::from(shape::UVSphere { ..Default::default() })
+        )
+    });
+
+
     // plane
     commands
         .spawn_bundle(PbrBundle {
@@ -36,34 +70,34 @@ fn setup(
                                                    // cube
 
         ///3 spheres
-        let c = Point{..Default::default()};
-        commands.spawn_bundle(create_sphere(&c, meshes.copy(), materials));
+        // let c = Point{..Default::default()};
+        // commands.spawn_bundle(create_sphere(&c, meshes.copy(), materials));
         
-        commands
-        .spawn_bundle(PbrBundle {
-            mesh: meshes.add(Mesh::from(shape::UVSphere { ..Default::default() })),
-            material: materials.add(Color::rgb(0.2, 0.4, 0.6).into()),
-            transform: Transform::from_xyz(2.0, 0.6, -2.0),
-            ..Default::default()
-        });
+        // commands
+        // .spawn_bundle(PbrBundle {
+        //     mesh: meshes.add(Mesh::from(shape::UVSphere { ..Default::default() })),
+        //     material: materials.add(Color::rgb(0.2, 0.4, 0.6).into()),
+        //     transform: Transform::from_xyz(2.0, 0.6, -2.0),
+        //     ..Default::default()
+        // });
 
-        commands
-        .spawn_bundle(PbrBundle {
-            mesh: meshes.add(Mesh::from(shape::UVSphere { ..Default::default() })),
-            material: materials.add(Color::rgb(0.2, 0.4, 0.6).into()),
-            transform: Transform::from_xyz(2.0, 0.6, -2.0),
-            ..Default::default()
-        });
+        // commands
+        // .spawn_bundle(PbrBundle {
+        //     mesh: meshes.add(Mesh::from(shape::UVSphere { ..Default::default() })),
+        //     material: materials.add(Color::rgb(0.2, 0.4, 0.6).into()),
+        //     transform: Transform::from_xyz(2.0, 0.6, -2.0),
+        //     ..Default::default()
+        // });
 
-        commands.spawn_bundle(PointLightBundle {
-        point_light: PointLight {
-            intensity: 1500.0,
-            shadows_enabled: true,
-            ..Default::default()
-        },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
-        ..Default::default()
-    });
+        // commands.spawn_bundle(PointLightBundle {
+        // point_light: PointLight {
+        //     intensity: 1500.0,
+        //     shadows_enabled: true,
+        //     ..Default::default()
+        // },
+        // transform: Transform::from_xyz(4.0, 8.0, 4.0),
+        // ..Default::default()
+    // });
 
     // camera
     commands
