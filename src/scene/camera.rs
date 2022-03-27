@@ -1,7 +1,9 @@
-use crate::utils::geometry::Point;
+use glam::Vec3A;
+
+// use crate::utils::geometry::Point;
 
 #[derive(Default)]
 pub struct Camera {
-    pub pos : Point,
-    pub pos_focal : Point,
+    pub pos : Vec3A,
+    pub pos_focal : Vec3A,
 }

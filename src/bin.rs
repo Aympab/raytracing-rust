@@ -5,12 +5,6 @@ use bevy::prelude::*;
 use bevy_utils::spawns::*;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
-use raytracing::utils::geometry::Point;
-
-struct BevyCamera {
-    pos : Point,
-    focal : Point
-}
 
 fn main() {
     App::new()
@@ -44,6 +38,7 @@ fn setup(
         })),
     });
 
+
     // plane
     commands.spawn_bundle(PbrBundle {
         mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
@@ -63,8 +58,11 @@ fn setup(
     });
 
     // camera
+    // let p_cam = Point::xyz(-2.0, 2.5, 5.0);
+    let p_cam = Vec3::new(-2.0, 2.5, 5.0);
+    let p_focus = Vec3::ZERO;
     commands.spawn_bundle(PerspectiveCameraBundle {
-        transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
+        transform: Transform::from_translation(p_cam).looking_at(p_focus, Vec3::Y),
         ..Default::default()
     });
     // .insert_bundle(PickingCameraBundle::default()); // <- Sets the camera to use for picking.

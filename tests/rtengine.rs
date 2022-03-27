@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod rtengine_tests {
+    use glam::Vec3A;
     use ndarray::Array2;
     use raytracing::core::rtengine::RTEngine;
-    use raytracing::utils::geometry::Point;
 
     #[test]
     fn basic_instanciation() {
-        let origin = Point::default();
-        let origins = Array2::<Point>::default((3, 1));
+        let origin = Vec3A::default();
+        let origins = Array2::<Vec3A>::default((3, 1));
 
         // let c = RGBColor{..Default::default()};
         // let colors = Vec::from([c, c, c]);
@@ -29,10 +29,10 @@ mod rtengine_tests {
     /// pt = Path tracing
     fn pt_size_of_output() {
         let size: usize = 10;
-        let pos_pixels = Array2::<Point>::default((size, size * 2));
+        let pos_pixels = Array2::<Vec3A>::default((size, size * 2));
 
         let mut rte = RTEngine {
-            pos_camera: Point::default(),
+            pos_camera: Vec3A::default(),
             pos_pixels: pos_pixels,
         };
 

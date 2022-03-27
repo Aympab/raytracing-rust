@@ -1,15 +1,16 @@
 use crate::utils::color::RGBColor;
 use crate::utils::geometry::Line;
-use crate::utils::geometry::Point;
+// use crate::utils::geometry::Point;
 
+use glam::Vec3A;
 use ndarray::Array2;
 
 const MAX_DEPTH: i32 = 10;
 
 pub struct RTEngine {
-    pub pos_camera: Point,
-    pub pos_pixels: Array2<Point>,
-    // pub pos_pixels : Vec<Point>,
+    pub pos_camera: Vec3A,
+    pub pos_pixels: Array2<Vec3A>,
+    // pub pos_pixels : Vec<Vec3A>,
 }
 
 impl RTEngine {
@@ -47,9 +48,7 @@ fn color_contribution(ray: Line, depth: i32) -> RGBColor {
     return color;
 }
 
-fn intersect(_ray: Line) -> Point {
+fn intersect(_ray: Line) -> Vec3A {
     //TODO :
-    Point {
-        ..Default::default()
-    }
+    Vec3A::ZERO
 }

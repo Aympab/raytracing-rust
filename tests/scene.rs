@@ -14,13 +14,13 @@ mod camera_tests {
 
 #[cfg(test)]
 mod light_tests {
+    use glam::Vec3A;
     use raytracing::scene::light::Light;
-    use raytracing::utils::geometry::Point;
 
     #[test]
     fn default_instanciation() {
         let light = Light::default();
 
-        assert_eq!(light.pos, Point::default());
+        assert_eq!(light.pos, Vec3A::ZERO);
     }
 }
