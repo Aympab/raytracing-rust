@@ -2,7 +2,15 @@ pub mod bevy_utils;
 pub mod utils;
 
 use bevy::prelude::*;
-use bevy_utils::bevy_utils::*;
+use bevy_utils::spawns::*;
+use bevy_utils::resources::Materials;
+use bevy_utils::resources::Meshes;
+use raytracing::utils::geometry::Point;
+
+struct BevyCamera {
+    pos : Point,
+    focal : Point
+}
 
 fn main() {
     App::new()
