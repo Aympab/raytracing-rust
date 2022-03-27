@@ -13,6 +13,7 @@ pub struct Meshes {
     pub plane_mesh: Handle<Mesh>
 }
 
+#[derive(Clone, Copy, Component)]
 pub struct BevyCamera {
     pub pos : Vec3,
     pub focal : Vec3

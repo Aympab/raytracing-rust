@@ -7,6 +7,7 @@ use bevy_utils::resources::BevyLight;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
+use bevy_utils::raytracing::compute_rt;
 
 fn main() {
     App::new()
@@ -22,6 +23,7 @@ fn main() {
         .add_startup_stage("light_spawn_stage", SystemStage::single(light_spawn))
         .add_startup_stage("plane_spawn_stage", SystemStage::single(plane_spawn))
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
+        .add_system(compute_rt)
         .run();
 
 }

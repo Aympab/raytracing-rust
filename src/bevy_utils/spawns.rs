@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use crate::bevy_utils::resources::*;
 
-use super::components::*;
+use super::components::BevyLightC;
 
 pub fn camera_spawn(
     mut commands: Commands,
@@ -15,23 +15,19 @@ pub fn camera_spawn(
 
 pub fn light_spawn(
     mut commands: Commands,
-    light: Res<BevyLight>,
+    // light : BevyLight
 ){
-    //Light
     commands.spawn_bundle(PointLightBundle {
         point_light: PointLight {
-            intensity: light.intensity,
+            // intensity: light.intensity,
+            intensity: 1500.0,
             shadows_enabled: true,
-            // radius : 10.0,
-            // range : 10.0,
-            // color:Color::rgb(0.8, 0.1, 0.1).into(),
             ..Default::default()
         },
-        transform: Transform::from_translation(light.pos),
+        transform: Transform::from_xyz(4.0, 8.0, 4.0),
         ..Default::default()
     })
-    .insert(light.clone());
-    // .insert(LightPosC::default())
+    .insert(BevyLightC);
     // .insert(LightIntensityC::default());
 }
 
