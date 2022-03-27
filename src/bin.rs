@@ -2,6 +2,7 @@ pub mod bevy_utils;
 pub mod utils;
 
 use bevy::prelude::*;
+use bevy_utils::resources::BevyCamera;
 use bevy_utils::spawns::*;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
@@ -16,7 +17,8 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_startup_system(setup)
-        .add_startup_stage("sphere_spawning_stage", SystemStage::single(sphere_spawn))
+        .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
+        .add_startup_stage("camera_spawn_stage", SystemStage::single(camera_spawn))
         .run();
 }
 
@@ -38,6 +40,10 @@ fn setup(
         })),
     });
 
+    commands.insert_resource(BevyCamera{
+        focal : Vec3::ZERO,
+        pos : Vec3::new(-2.0, 2.5, 5.0),
+    });
 
     // plane
     commands.spawn_bundle(PbrBundle {
@@ -56,14 +62,4 @@ fn setup(
         transform: Transform::from_xyz(4.0, 8.0, 4.0),
         ..Default::default()
     });
-
-    // camera
-    // let p_cam = Point::xyz(-2.0, 2.5, 5.0);
-    let p_cam = Vec3::new(-2.0, 2.5, 5.0);
-    let p_focus = Vec3::ZERO;
-    commands.spawn_bundle(PerspectiveCameraBundle {
-        transform: Transform::from_translation(p_cam).looking_at(p_focus, Vec3::Y),
-        ..Default::default()
-    });
-    // .insert_bundle(PickingCameraBundle::default()); // <- Sets the camera to use for picking.
 }
