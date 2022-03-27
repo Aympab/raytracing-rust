@@ -3,9 +3,10 @@ pub mod utils;
 
 use bevy::prelude::*;
 use bevy_utils::resources::BevyCamera;
-use bevy_utils::spawns::*;
+use bevy_utils::resources::BevyLight;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
+use bevy_utils::spawns::*;
 
 fn main() {
     App::new()
@@ -17,8 +18,10 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_startup_system(setup)
-        .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .add_startup_stage("camera_spawn_stage", SystemStage::single(camera_spawn))
+        .add_startup_stage("light_spawn_stage", SystemStage::single(light_spawn))
+        .add_startup_stage("plane_spawn_stage", SystemStage::single(plane_spawn))
+        .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .run();
 
 }
@@ -33,35 +36,16 @@ fn setup(
         sphere_material_red: materials.add(Color::rgb(0.8, 0.1, 0.1).into()),
         sphere_material_green: materials.add(Color::rgb(0.1, 0.8, 0.1).into()),
         sphere_material_blue: materials.add(Color::rgb(0.1, 0.1, 0.8).into()),
+        plane_material: materials.add(Color::rgb(0.3, 0.5, 0.3).into())
     });
 
-    //Same for the meshing
+    //Same for the meshings
     commands.insert_resource(Meshes {
-        sphere_mesh: meshes.add(Mesh::from(shape::UVSphere {
-            ..Default::default()
-        })),
+        sphere_mesh: meshes.add(Mesh::from(shape::UVSphere::default())),
+        plane_mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
     });
 
-    commands.insert_resource(BevyCamera{
-        focal : Vec3::ZERO,
-        pos : Vec3::new(-2.0, 2.5, 5.0),
-    });
-
-    // plane
-    commands.spawn_bundle(PbrBundle {
-        mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
-        material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
-        ..Default::default()
-    });
-
-    //Light
-    commands.spawn_bundle(PointLightBundle {
-        point_light: PointLight {
-            intensity: 1500.0,
-            shadows_enabled: true,
-            ..Default::default()
-        },
-        transform: Transform::from_xyz(4.0, 8.0, 4.0),
-        ..Default::default()
-    });
+    //Same for camera & light
+    commands.insert_resource(BevyCamera::default());
+    commands.insert_resource(BevyLight::default());
 }
