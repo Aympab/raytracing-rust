@@ -4,7 +4,7 @@ mod point_tests{
 
     #[test]
     fn default_instanciation() {
-        let p = Point{..Default::default()};
+        let p = Point::default();
 
         assert_eq!(p.x, 0.0f32);
         assert_eq!(p.y, 0.0f32);
@@ -37,7 +37,7 @@ mod point_tests{
 
     #[test]
     fn various_operator() {
-        let mut p1 = Point{..Default::default()};
+        let mut p1 = Point::default();
         let mut sum : f32 = 0f32;
 
         for i in 0..100 {

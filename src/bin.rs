@@ -2,7 +2,7 @@ pub mod bevy_utils;
 pub mod utils;
 
 use bevy::prelude::*;
-use bevy_utils::mesh::*;
+use bevy_utils::bevy_utils::*;
 
 fn main() {
     App::new()
@@ -24,10 +24,12 @@ fn setup(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
+    //We add the ressources "Materials" type we made so bevy knows them
     commands.insert_resource(Materials {
         sphere_material: materials.add(Color::rgb(0.2, 0.4, 0.6).into()),
     });
 
+    //Same for the meshing
     commands.insert_resource(Meshes {
         sphere_mesh: meshes.add(Mesh::from(shape::UVSphere {
             ..Default::default()
@@ -40,7 +42,6 @@ fn setup(
         material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
         ..Default::default()
     });
-    // .insert_bundle(PickableBundle::default()); // <- Makes the mesh pickable.
 
     //Light
     commands.spawn_bundle(PointLightBundle {

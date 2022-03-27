@@ -6,9 +6,7 @@ mod rtengine_tests {
 
     #[test]
     fn basic_instanciation() {
-        let origin = Point {
-            ..Default::default()
-        };
+        let origin = Point::default();
         let origins = Array2::<Point>::default((3, 1));
 
         // let c = RGBColor{..Default::default()};
@@ -34,9 +32,7 @@ mod rtengine_tests {
         let pos_pixels = Array2::<Point>::default((size, size * 2));
 
         let mut rte = RTEngine {
-            pos_camera: Point {
-                ..Default::default()
-            },
+            pos_camera: Point::default(),
             pos_pixels: pos_pixels,
         };
 

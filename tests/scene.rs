@@ -19,15 +19,8 @@ mod light_tests {
 
     #[test]
     fn default_instanciation() {
-        let light = Light {
-            ..Default::default()
-        };
+        let light = Light::default();
 
-        assert_eq!(
-            light.pos,
-            Point {
-                ..Default::default()
-            }
-        );
+        assert_eq!(light.pos, Point::default());
     }
 }
