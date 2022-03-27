@@ -1,5 +1,6 @@
 use bevy::prelude::Component;
-// use glam::Vec3;
+
+///These are used to work as an id for bevy's queries
 
 #[derive(Component)]
 pub struct BevyLightC;
@@ -9,19 +10,3 @@ pub struct BevyCameraC;
 
 #[derive(Component)]
 pub struct BevySphereC;
-// #[derive(Component)] 
-// pub struct LightPosC(Vec3);
-// #[derive(Component)]
-// pub struct LightIntensityC(f32);
-
-// impl Default for LightPosC {
-//     fn default() -> Self {
-//         LightPosC(Vec3::new(4.0, 8.0, 4.0))
-//     }
-// }
-
-// impl Default for LightIntensityC {
-//     fn default() -> Self {
-//         Self(1400.0)
-//     }
-// }
