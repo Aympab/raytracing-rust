@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use crate::bevy_utils::resources::*;
 
+use super::components::*;
+
 pub fn camera_spawn(
     mut commands: Commands,
     cam: Res<BevyCamera>,
@@ -27,7 +29,10 @@ pub fn light_spawn(
         },
         transform: Transform::from_translation(light.pos),
         ..Default::default()
-    });
+    })
+    .insert(light.clone());
+    // .insert(LightPosC::default())
+    // .insert(LightIntensityC::default());
 }
 
 pub fn sphere_spawn(

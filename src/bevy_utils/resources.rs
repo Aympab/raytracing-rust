@@ -27,6 +27,7 @@ impl Default for BevyCamera {
     }
 }
 
+#[derive(Clone, Copy, Component)]
 pub struct BevyLight {
     pub pos : Vec3,
     pub intensity : f32
