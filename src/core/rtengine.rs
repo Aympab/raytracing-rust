@@ -52,3 +52,17 @@ fn intersect(_ray: Line) -> Vec3A {
     //TODO :
     Vec3A::ZERO
 }
+
+fn sphere_intersect(center: Vec3A, radius: f32, ray_origin: Vec3A, ray_direction: Vec3A) -> f32 {
+    let b = ray_direction.dot(ray_origin - center) * 2.;
+    let c = (ray_origin - center).length_squared() - radius * radius;
+    let delta = b * b - 4. * c;
+    let mut result = -1.;
+    if delta > 0. {
+        let s = delta.sqrt();
+        let t1 = (-b + s) * 0.5;
+        let t2 = (-b - s) * 0.5;
+        result = t1.min(t2);
+    }
+    result
+}
