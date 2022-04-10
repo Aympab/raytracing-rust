@@ -13,6 +13,7 @@ pub struct RTEngine {
     // pub pos_pixels : Vec<Vec3A>,
 }
 
+#[derive(Default, Copy, Clone)]
 pub struct Sphere {
     pub center: Vec3A,
     pub radius: f32,
@@ -57,17 +58,17 @@ fn nearest_intersected_object(
     objects: &Vec<Sphere>,
     ray_origin: Vec3A,
     ray_direction: Vec3A,
-) -> (Option<Sphere>, f32) {
+) -> (Sphere, f32) {
     let mut distances = Vec::with_capacity(objects.len());
     for (i, obj) in objects.iter().enumerate() {
         distances[i] = sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction);
     }
-    let nearest_object = None;
-    let min_distance: f32 = std::f32::INFINITY;
+    let mut nearest_object: Sphere = Sphere::default();
+    let mut min_distance: f32 = std::f32::INFINITY;
     for (index, distance) in distances.iter().enumerate() {
         if distance.is_sign_positive() && distance < &min_distance {
-            let min_distance = distance;
-            let nearest_object = &objects[index];
+            min_distance = *distance;
+            nearest_object = objects[index];
         }
     }
     (nearest_object, min_distance)
