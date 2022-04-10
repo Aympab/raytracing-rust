@@ -13,6 +13,11 @@ pub struct RTEngine {
     // pub pos_pixels : Vec<Vec3A>,
 }
 
+pub struct Sphere {
+    pub center: Vec3A,
+    pub radius: f32,
+}
+
 impl RTEngine {
     ///The simplest ray tracing algorithm : path tracing
     pub fn path_tracing(&mut self) -> Array2<RGBColor> {
@@ -42,15 +47,30 @@ fn color_contribution(ray: Line, depth: i32) -> RGBColor {
     if depth > MAX_DEPTH {
         return color;
     };
-    let _p = intersect(ray);
+    // let _p = intersect(ray);
     // if &p == std::ptr::null { return color};
     //TODO:
     return color;
 }
 
-fn intersect(_ray: Line) -> Vec3A {
-    //TODO :
-    Vec3A::ZERO
+fn nearest_intersected_object(
+    objects: &Vec<Sphere>,
+    ray_origin: Vec3A,
+    ray_direction: Vec3A,
+) -> (Option<Sphere>, f32) {
+    let mut distances = Vec::with_capacity(objects.len());
+    for (i, obj) in objects.iter().enumerate() {
+        distances[i] = sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction);
+    }
+    let nearest_object = None;
+    let min_distance: f32 = std::f32::INFINITY;
+    for (index, distance) in distances.iter().enumerate() {
+        if distance.is_sign_positive() && distance < &min_distance {
+            let min_distance = distance;
+            let nearest_object = &objects[index];
+        }
+    }
+    (nearest_object, min_distance)
 }
 
 fn sphere_intersect(center: Vec3A, radius: f32, ray_origin: Vec3A, ray_direction: Vec3A) -> f32 {
