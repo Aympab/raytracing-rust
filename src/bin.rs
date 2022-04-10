@@ -1,5 +1,5 @@
-pub mod bevy_utils;
-pub mod utils;
+mod bevy_utils;
+mod utils;
 
 use bevy::prelude::*;
 // use bevy_utils::resources::BevyCamera;
@@ -19,7 +19,7 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_startup_system(setup)
-        .add_startup_stage("camera_spawn_stage", SystemStage::single(camera_spawn))
+        .add_startup_stage("camera_spawn_stage", SystemStage::single(camera_spawn)) //TODO : Use bevy Plugin
         .add_startup_stage("light_spawn_stage", SystemStage::single(light_spawn))
         .add_startup_stage("plane_spawn_stage", SystemStage::single(plane_spawn))
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
