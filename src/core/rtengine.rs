@@ -7,9 +7,10 @@ use ndarray::Array2;
 
 // Avoid recurrent algorithm
 // const MAX_DEPTH: i32 = 10;
-const AMBIANT_LIGHT: Vec3A = Vec3A::new(1., 1., 1.);
-const DIFFUSE_LIGHT: Vec3A = Vec3A::new(1., 1., 1.);
-const SPECULAR_LIGHT: Vec3A = Vec3A::new(1., 1., 1.);
+
+const AMBIANT_LIGHT: Vec3A = Vec3A::ONE;
+const DIFFUSE_LIGHT: Vec3A = Vec3A::ONE;
+const SPECULAR_LIGHT: Vec3A = Vec3A::ONE;
 
 pub struct RTEngine {
     pub pos_camera: Vec3A,
@@ -25,6 +26,7 @@ pub struct Sphere {
     pub radius: f32,
 }
 
+#[derive(Default, Copy, Clone)]
 pub struct Material {
     pub ambiant: Vec3A,
     pub diffuse: Vec3A,
@@ -42,15 +44,15 @@ impl RTEngine {
         let mut colors = Array2::<Vec3A>::default((width, height));
 
         for ((i, j), pixel) in self.pos_pixels.indexed_iter() {
-            colors[[i, j]] = self.color_contribution(pixel, 0);
+            colors[[i, j]] = self._color_contribution(*pixel, 3);
         }
 
         return colors;
     }
 
-    fn color_contribution(&mut self, pixel: &Vec3A, max_depth: i32) -> Vec3A {
+    fn _color_contribution(&self, pixel: Vec3A, max_depth: i32) -> Vec3A {
         let mut origin = self.pos_camera;
-        let mut direction: Vec3A = (*pixel - origin).normalize();
+        let mut direction: Vec3A = (pixel - origin).normalize();
         // let color = RGBColor {
         //     ..Default::default()
         // }; // TODO : set background color
@@ -59,9 +61,9 @@ impl RTEngine {
 
         let mut reflection = 1.;
 
-        for k in 0..max_depth {
+        for _ in 0..max_depth {
             let (target_index, min_distance): (i32, f32) =
-                self.nearest_intersected_object(origin, direction);
+                self._nearest_intersected_object(origin, direction);
             if !target_index.is_positive() {
                 break;
             }
@@ -76,7 +78,7 @@ impl RTEngine {
             let intersection_to_light = (self.pos_light - shifted_point).normalize();
 
             let (_, min_distance): (i32, f32) =
-                self.nearest_intersected_object(shifted_point, intersection_to_light);
+                self._nearest_intersected_object(shifted_point, intersection_to_light);
             let intersection_to_light_distance = (self.pos_light - intersection).length();
             if min_distance < intersection_to_light_distance {
                 break;
@@ -110,11 +112,7 @@ impl RTEngine {
         return clip(color, 0., 1.);
     }
 
-    fn nearest_intersected_object(
-        &mut self,
-        ray_origin: Vec3A,
-        ray_direction: Vec3A,
-    ) -> (i32, f32) {
+    fn _nearest_intersected_object(&self, ray_origin: Vec3A, ray_direction: Vec3A) -> (i32, f32) {
         let mut distances = Vec::with_capacity(self.objects.len());
         for (i, obj) in self.objects.iter().enumerate() {
             distances[i] = sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction);
