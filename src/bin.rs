@@ -4,12 +4,15 @@ pub mod utils;
 use bevy::prelude::*;
 // use bevy_utils::resources::BevyCamera;
 // use bevy_utils::resources::BevyLight;
+use bevy_utils::raytracing::compute_rt;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
-use bevy_utils::raytracing::compute_rt;
+
+use raytracing::run_lib;
 
 fn main() {
+    run_lib();
     App::new()
         .insert_resource(WindowDescriptor {
             title: "Raytracing app".to_string(),
@@ -25,7 +28,6 @@ fn main() {
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .add_system(compute_rt)
         .run();
-
 }
 /// set up a simple 3D scene
 fn setup(
@@ -38,7 +40,7 @@ fn setup(
         sphere_material_red: materials.add(Color::rgb(0.8, 0.1, 0.1).into()),
         sphere_material_green: materials.add(Color::rgb(0.1, 0.8, 0.1).into()),
         sphere_material_blue: materials.add(Color::rgb(0.1, 0.1, 0.8).into()),
-        plane_material: materials.add(Color::rgb(0.3, 0.5, 0.3).into())
+        plane_material: materials.add(Color::rgb(0.3, 0.5, 0.3).into()),
     });
 
     //Same for the meshings

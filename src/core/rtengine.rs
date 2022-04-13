@@ -114,8 +114,13 @@ impl RTEngine {
 
     fn _nearest_intersected_object(&self, ray_origin: Vec3A, ray_direction: Vec3A) -> (i32, f32) {
         let mut distances = Vec::new();
-        for obj in self.objects.iter(){
-            distances.push(sphere_intersect(obj.center, obj.radius, ray_origin, ray_direction));
+        for obj in self.objects.iter() {
+            distances.push(sphere_intersect(
+                obj.center,
+                obj.radius,
+                ray_origin,
+                ray_direction,
+            ));
         }
         let mut nearest_object: i32 = -1;
         let mut min_distance: f32 = std::f32::INFINITY;
