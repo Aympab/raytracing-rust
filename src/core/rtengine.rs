@@ -42,7 +42,6 @@ impl RTEngine {
         let height: usize = self.pos_pixels.shape()[1];
 
         let mut colors = Array2::<Vec3A>::default((width, height));
-
         for ((i, j), pixel) in self.pos_pixels.indexed_iter() {
             colors[[i, j]] = self._color_contribution(*pixel, 3);
         }
@@ -64,7 +63,7 @@ impl RTEngine {
         for _ in 0..max_depth {
             let (target_index, min_distance): (i32, f32) =
                 self._nearest_intersected_object(origin, direction);
-            if !target_index.is_positive() {
+            if target_index <= -1 {
                 break;
             }
             // Object and material given the ray
@@ -108,8 +107,7 @@ impl RTEngine {
             origin = shifted_point.clone();
             direction = reflected(direction, normal_to_surface);
         }
-
-        return clip(color, 0., 1.);
+        return clip(255. * color, 0., 255.);
     }
 
     fn _nearest_intersected_object(&self, ray_origin: Vec3A, ray_direction: Vec3A) -> (i32, f32) {
