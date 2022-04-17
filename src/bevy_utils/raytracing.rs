@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-// use bevy::asset::
 use super::components::{BevyLightC, BevyCameraC, BevySphereC};
 
 ///Gets all the positions and objects components from the scene

@@ -1,5 +1,5 @@
-pub mod bevy_utils;
-pub mod utils;
+mod bevy_utils;
+mod utils;
 
 use bevy::prelude::*;
 // use bevy_utils::resources::BevyCamera;
@@ -8,7 +8,6 @@ use bevy::prelude::*;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 // use bevy_utils::spawns::*;
-
 use raytracing::run_lib;
 
 fn main() {
