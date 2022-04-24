@@ -1,5 +1,13 @@
 use bevy::prelude::*;
 use crate::bevy_utils::resources::*;
+use bevy_mod_raycast::{RayCastSource, RayCastMesh};
+
+/*
+Mark our generic `RayCastMesh`s and `RayCastSource`s as part
+of the same "RayCastSet". This plugin uses generics
+to distinguish between groups of raycasters.
+*/
+pub struct MyRaycastSet;
 
 use super::components::{BevyLightC, BevyCameraC, BevySphereC};
 
@@ -10,6 +18,7 @@ pub fn camera_spawn(
         transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
         ..Default::default()
     })
+    .insert(RayCastSource::<MyRaycastSet>::new_transform_empty())
     .insert(BevyCameraC);
 }
 
@@ -44,6 +53,7 @@ pub fn sphere_spawn(
         transform: Transform::from_translation(pos),
         ..Default::default()
     })
+    .insert(RayCastMesh::<MyRaycastSet>::default()) //make the mesh ray castable
     .insert(BevySphereC);
     };
 

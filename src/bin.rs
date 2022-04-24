@@ -8,18 +8,12 @@ use bevy_utils::raytracing::compute_rt;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
-use bevy_mod_raycast::DefaultRaycastingPlugin;
+use bevy_mod_raycast::{DefaultRaycastingPlugin};
 // use bevy_mod_raycast::{
 //     DefaultPluginState, DefaultRaycastingPlugin, Intersection, RayCastMesh, RayCastSource,
 // };
 
 
-/*
-Mark our generic `RayCastMesh`s and `RayCastSource`s as part
-of the same "RayCastSet". This plugin uses generics
-to distinguish between groups of raycasters.
-*/
-struct MyRaycastSet;
 
 fn main() {
     // run_lib();
@@ -56,7 +50,10 @@ fn _setup(
 
     //Same for the meshings
     commands.insert_resource(Meshes {
-        sphere_mesh: meshes.add(Mesh::from(shape::UVSphere::default())),
+        sphere_mesh: meshes.add(Mesh::from(shape::Icosphere {
+            radius: 1.0,
+            subdivisions: 10,
+        })),
         plane_mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
     });
 }
