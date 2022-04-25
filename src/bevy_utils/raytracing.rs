@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 use super::components::{BevyLightC, BevyCameraC, BevySphereC};
+// use super::spawns::MyRaycastSet;
+use bevy_mod_raycast::Intersection;
 
 ///Gets all the positions and objects components from the scene
 /// and feed them to the raytracing engine
@@ -7,7 +9,8 @@ pub fn compute_rt(
     keyboard_input: Res<Input<KeyCode>>,
     light_query : Query<(&Transform, With<BevyLightC>)>,
     cam_query : Query<(&Transform, With<BevyCameraC>)>,
-    object_query : Query<(&Transform, With<BevySphereC>)>
+    object_query : Query<(&Transform, With<BevySphereC>)>,
+    intersection_query : Query<&Intersection>
     // object_query : Query<(&Transform, &Handle<Mesh>, &Handle<StandardMaterial>, With<BevySphereC>)>
 ){
     let (light_tr, _) = light_query.single();
@@ -36,8 +39,17 @@ pub fn compute_rt(
             println!("  > Pos : {}, {}, {}", tr.translation.x, tr.translation.y, tr.translation.z);
             // println!("  > Color : {}, {}, {}", mat.albedo.r(), mat.albedo.g(), mat.albedo.b())
         }
-    }
 
+    // Report intersections
+    println!("Intersections is empty : {}", intersection_query.is_empty());
+    for intersection in intersection_query.iter() {
+        info!(
+            "Distance {:?}, Position {:?}",
+            intersection.distance(),
+            intersection.position()
+        );
+    }
+}
     //TODO : Call Raytracing engine with values gotten from bevy
 
 }

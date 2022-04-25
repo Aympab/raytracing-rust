@@ -7,6 +7,7 @@ Mark our generic `RayCastMesh`s and `RayCastSource`s as part
 of the same "RayCastSet". This plugin uses generics
 to distinguish between groups of raycasters.
 */
+
 pub struct MyRaycastSet;
 
 use super::components::{BevyLightC, BevyCameraC, BevySphereC};
@@ -14,12 +15,13 @@ use super::components::{BevyLightC, BevyCameraC, BevySphereC};
 pub fn camera_spawn(
     mut commands: Commands,
 ){
+    let tf : Transform = Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y);
     commands.spawn_bundle(PerspectiveCameraBundle {
-        transform: Transform::from_xyz(-2.0, 2.5, 5.0).looking_at(Vec3::ZERO, Vec3::Y),
+        transform: tf,
         ..Default::default()
     })
-    .insert(RayCastSource::<MyRaycastSet>::new_transform_empty())
-    .insert(BevyCameraC);
+    .insert(BevyCameraC)
+    .insert(RayCastSource::<MyRaycastSet>::new_transform(tf.compute_matrix()));
 }
 
 pub fn light_spawn(
@@ -77,5 +79,6 @@ pub fn plane_spawn(
             mesh: meshes.plane_mesh.clone(),
             material: materials.plane_material.clone(),
             ..Default::default()
-        });
+        })
+        .insert(RayCastMesh::<MyRaycastSet>::default());
 }

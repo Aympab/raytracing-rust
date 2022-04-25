@@ -8,7 +8,8 @@ use bevy_utils::raytracing::compute_rt;
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
-use bevy_mod_raycast::{DefaultRaycastingPlugin};
+use bevy_mod_raycast::DefaultRaycastingPlugin;
+
 // use bevy_mod_raycast::{
 //     DefaultPluginState, DefaultRaycastingPlugin, Intersection, RayCastMesh, RayCastSource,
 // };
@@ -32,6 +33,8 @@ fn main() {
         .add_startup_stage("plane_spawn_stage", SystemStage::single(plane_spawn))
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .add_system(compute_rt)
+        // .add_system(intersection)
+
         .run();
 }
 /// set up a simple 3D scene
@@ -57,3 +60,4 @@ fn _setup(
         plane_mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
     });
 }
+
