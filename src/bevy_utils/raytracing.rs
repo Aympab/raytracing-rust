@@ -12,45 +12,58 @@ pub fn compute_rt(
     light_query : Query<(&Transform, With<BevyLightC>)>,
     cam_query : Query<(&Transform, With<BevyCameraC>)>,
     object_query : Query<(&Transform, With<BevySphereC>)>,
-    intersection_query : Query<&Intersection>
+    raysource : Query<&RayCastSource<MyRaycastSet>>,
+    // intersection_query : Query<&Intersection>
     // object_query : Query<(&Transform, &Handle<Mesh>, &Handle<StandardMaterial>, With<BevySphereC>)>
 ){
     let (light_tr, _) = light_query.single();
     let (cam_tr, _) = cam_query.single();
 
     if keyboard_input.just_released(KeyCode::Space){
-        println!("Light position : {}, {}, {}",
-            light_tr.translation.x,
-            light_tr.translation.y,
-            light_tr.translation.z);
+    //     println!("Light position : {}, {}, {}",
+    //         light_tr.translation.x,
+    //         light_tr.translation.y,
+    //         light_tr.translation.z);
 
-        println!("Cam position : {}, {}, {}",
-            cam_tr.translation.x,
-            cam_tr.translation.y,
-            cam_tr.translation.z);
+    //     println!("Cam position : {}, {}, {}",
+    //         cam_tr.translation.x,
+    //         cam_tr.translation.y,
+    //         cam_tr.translation.z);
         
-            println!("Spheres :");
+    //         println!("Spheres :");
 
-        let mut i = 0;
-        // for (tr, mesh, mat, _) in object_query.iter(){
-        for (tr, _) in object_query.iter(){
-            i += 1;
-            println!("{}:", i);
+    //     let mut i = 0;
+    //     // for (tr, mesh, mat, _) in object_query.iter(){
+    //     for (tr, _) in object_query.iter(){
+    //         i += 1;
+    //         println!("{}:", i);
     
-            // let color = a.get_with_id(mat.id);
-            println!("  > Pos : {}, {}, {}", tr.translation.x, tr.translation.y, tr.translation.z);
-            // println!("  > Color : {}, {}, {}", mat.albedo.r(), mat.albedo.g(), mat.albedo.b())
-        }
+    //         // let color = a.get_with_id(mat.id);
+    //         println!("  > Pos : {}, {}, {}", tr.translation.x, tr.translation.y, tr.translation.z);
+    //         // println!("  > Color : {}, {}, {}", mat.albedo.r(), mat.albedo.g(), mat.albedo.b())
+    //     }
+
+    let raycast_source = raysource.single();
+    
+    if let Some(top_intersection) = raycast_source.intersect_top() {
+        let from = cam_tr.translation;
+        let to = top_intersection.1.position();
+        let ray_direction = (to - from).normalize();
+
+        let ray = Ray3d::new(from, ray_direction);
+    }        
+        // let ray = Ray3d::new(cam_tr.translation, //from
+        //     cam_tr.rotation.normalize());  //ray_direction);
 
     // Report intersections
-    println!("Intersections is empty : {}", intersection_query.is_empty());
-    for intersection in intersection_query.iter() {
-        info!(
-            "Distance {:?}, Position {:?}",
-            intersection.distance(),
-            intersection.position()
-            );
-        }
+    // println!("Intersections is empty : {}", intersection_query.is_empty());
+    // for intersection in intersection_query.iter() {
+    //     info!(
+    //         "Distance {:?}, Position {:?}",
+    //         intersection.distance(),
+    //         intersection.position()
+    //         );
+    //     }
     }
     //TODO : Call Raytracing engine with values gotten from bevy
 }
