@@ -10,7 +10,7 @@ to distinguish between groups of raycasters.
 
 pub struct MyRaycastSet;
 
-use super::components::{BevyLightC, BevyCameraC, BevySphereC};
+use super::{components::{BevyLightC, BevyCameraC, BevySphereC}, raytracing::*};
 
 pub fn camera_spawn(
     mut commands: Commands,
@@ -21,7 +21,8 @@ pub fn camera_spawn(
         ..Default::default()
     })
     .insert(BevyCameraC)
-    .insert(RayCastSource::<MyRaycastSet>::new_transform(tf.compute_matrix()));
+    .insert(RayCastSource::<MyRaycastSet>::new_transform(tf.compute_matrix()))
+    .insert(PathOrigin);
 }
 
 pub fn light_spawn(
@@ -46,6 +47,8 @@ pub fn sphere_spawn(
     mut commands: Commands,
     materials: Res<Materials>,
     meshes: Res<Meshes>,
+    mut pointmeshes: ResMut<Assets<Mesh>>,
+    mut pointmaterials: ResMut<Assets<StandardMaterial>>,
 ) {
 
     let mut spawn_spheres = |pos : Vec3, mat : Handle<StandardMaterial>| {
@@ -56,7 +59,8 @@ pub fn sphere_spawn(
         ..Default::default()
     })
     .insert(RayCastMesh::<MyRaycastSet>::default()) //make the mesh ray castable
-    .insert(BevySphereC);
+    .insert(BevySphereC)
+    .insert(PathObstacle);
     };
 
     //Red sphere
@@ -67,6 +71,28 @@ pub fn sphere_spawn(
     
     //Green sphere
     spawn_spheres(Vec3::new(-1.0, 0.53, -0.6), materials.sphere_material_green.clone());
+
+
+
+
+    //TODO : change this part
+    // Spawn the intersection point, invisible by default until there is an intersection
+    commands
+        .spawn_bundle(PbrBundle {
+            mesh: pointmeshes.add(Mesh::from(shape::Icosphere::default())),
+            material: pointmaterials.add(StandardMaterial {
+                unlit: true,
+                base_color: Color::RED,
+                ..Default::default()
+            }),
+            transform: Transform::from_scale(Vec3::splat(0.1)),
+            visibility: Visibility {
+                is_visible: false,
+                ..Default::default()
+            },
+            ..Default::default()
+        })
+        .insert(PathObstaclePoint);
 }
 
 pub fn plane_spawn(

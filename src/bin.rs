@@ -4,7 +4,7 @@ mod utils;
 use bevy::prelude::*;
 // use bevy_utils::resources::BevyCamera;
 // use bevy_utils::resources::BevyLight;
-use bevy_utils::raytracing::compute_rt;
+use bevy_utils::raytracing::{compute_rt, check_path};
 use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
@@ -33,6 +33,7 @@ fn main() {
         .add_startup_stage("plane_spawn_stage", SystemStage::single(plane_spawn))
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .add_system(compute_rt)
+        .add_system(check_path)
         // .add_system(intersection)
 
         .run();
