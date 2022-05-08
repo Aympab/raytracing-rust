@@ -106,64 +106,56 @@ pub fn check_path(
     if keyboard_input.just_released(KeyCode::E){
         if let Ok(mut origin_transform) = from.get_single_mut() {
             let raycast_source = to.single();
-            // let mut pointer = pointer.single_mut();
             if let Some(top_intersection) = raycast_source.intersect_top() {
                 let from = origin_transform.translation;
                 let to = top_intersection.1.position();
                 let ray_direction = (to - from).normalize();
 
-                // // Rotate the direction indicator
-                // if Vec3::Z.angle_between(ray_direction) > FRAC_PI_2 {
-                //     origin_transform.rotation =
-                //         Quat::from_rotation_y(Vec3::X.angle_between(ray_direction));
-                // } else {
-                //     origin_transform.rotation =
-                //         Quat::from_rotation_y(-Vec3::X.angle_between(ray_direction));
-                // }
 
                 let ray = Ray3d::new(from, ray_direction);
-                // if let Ok(mut text) = status_query.get_single_mut() {
-                    if let Ok((mut intersection_transform, mut visible)) =
-                        intersection_point.get_single_mut()
-                    {
-                        // Set everything as OK in case there are no obstacle in path
-                        // text.sections[1].value = "Direct!".to_string();
-                        // text.sections[1].style.color = Color::GREEN;
-                        println!("Direct !");
-                        visible.is_visible = false;
 
-                        let mut closest_hit = f32::MAX;
+                if let Ok((mut intersection_transform, mut visible)) =
+                    intersection_point.get_single_mut(){
 
-                        // Check for an obstacle on path
-                        for (mesh_handle, transform) in obstacles.iter() {
-                            if let Some(mesh) = meshes.get(mesh_handle) {
-                                let mesh_to_world = transform.compute_matrix();
 
-                                // Check for intersection with this obstacle
-                                if let Some(intersection) =
-                                    ray_intersection_over_mesh(mesh, &mesh_to_world, &ray)
-                                {
-                                    // There was an intersection, check if it is before the cursor
-                                    // on the ray
-                                    let hit_distance = intersection.distance();
-                                    let cursor_distance = from.distance(to);
-                                    if hit_distance < cursor_distance && hit_distance < closest_hit {
-                                        // text.sections[1].value = "Obstructed!".to_string();
-                                        // text.sections[1].style.color = Color::RED;
-                                        println!("Obstructed !");
-                                        intersection_transform.translation = intersection.position();
-                                        visible.is_visible = true;
-                                        closest_hit = hit_distance;
-                                    }
+                    println!("Direct !");
+                    visible.is_visible = false;
+
+                    let mut closest_hit = f32::MAX;
+
+                    // Check for an obstacle on path
+                    for (mesh_handle, transform) in obstacles.iter() {
+                        if let Some(mesh) = meshes.get(mesh_handle) {
+                            let mesh_to_world = transform.compute_matrix();
+
+                            // Check for intersection with this obstacle
+                            if let Some(intersection) =
+                                ray_intersection_over_mesh(mesh, &mesh_to_world, &ray)
+                            {
+                                // There was an intersection, check if it is before the cursor
+                                // on the ray
+                                let hit_distance = intersection.distance();
+                                let cursor_distance = from.distance(to);
+                                if hit_distance < cursor_distance && hit_distance < closest_hit {
+                                    // text.sections[1].value = "Obstructed!".to_string();
+                                    // text.sections[1].style.color = Color::RED;
+                                    println!("Obstructed !");
+                                    intersection_transform.translation = intersection.position();
+                                    visible.is_visible = true;
+                                    closest_hit = hit_distance;
                                 }
+
+                                println!("  Intersection event : ");
+                                println!("      hit_distance : {}", hit_distance);
+                                println!("      cursor_distance : {}", cursor_distance);
                             }
                         }
-
-                        // pointer.scale = Vec3::new(closest_hit / 2.0, 0.05, 0.05);
-                        // pointer.translation = Vec3::new(closest_hit / 2.0, 0.0, 0.0);
                     }
-                // }
+                }
+                    // pointer.scale = Vec3::new(closest_hit / 2.0, 0.05, 0.05);
+                    // pointer.translation = Vec3::new(closest_hit / 2.0, 0.0, 0.0);
             }
         }
     }
 }
+
