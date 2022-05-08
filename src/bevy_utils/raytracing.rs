@@ -112,14 +112,14 @@ pub fn check_path(
                 let to = top_intersection.1.position();
                 let ray_direction = (to - from).normalize();
 
-                // Rotate the direction indicator
-                if Vec3::Z.angle_between(ray_direction) > FRAC_PI_2 {
-                    origin_transform.rotation =
-                        Quat::from_rotation_y(Vec3::X.angle_between(ray_direction));
-                } else {
-                    origin_transform.rotation =
-                        Quat::from_rotation_y(-Vec3::X.angle_between(ray_direction));
-                }
+                // // Rotate the direction indicator
+                // if Vec3::Z.angle_between(ray_direction) > FRAC_PI_2 {
+                //     origin_transform.rotation =
+                //         Quat::from_rotation_y(Vec3::X.angle_between(ray_direction));
+                // } else {
+                //     origin_transform.rotation =
+                //         Quat::from_rotation_y(-Vec3::X.angle_between(ray_direction));
+                // }
 
                 let ray = Ray3d::new(from, ray_direction);
                 // if let Ok(mut text) = status_query.get_single_mut() {
