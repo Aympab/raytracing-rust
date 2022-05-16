@@ -9,6 +9,13 @@ use bevy_utils::resources::Materials;
 use bevy_utils::resources::Meshes;
 use bevy_utils::spawns::*;
 // use raytracing::run_lib;
+use bevy_mod_raycast::DefaultRaycastingPlugin;
+
+// use bevy_mod_raycast::{
+//     DefaultPluginState, DefaultRaycastingPlugin, Intersection, RayCastMesh, RayCastSource,
+// };
+
+
 
 fn main() {
     // run_lib();
@@ -20,12 +27,15 @@ fn main() {
             ..Default::default()
         })
         .add_plugins(DefaultPlugins)
+        .add_plugin(DefaultRaycastingPlugin::<MyRaycastSet>::default())
         .add_startup_system(_setup)
         .add_startup_stage("camera_spawn_stage", SystemStage::single(camera_spawn))
         .add_startup_stage("light_spawn_stage", SystemStage::single(light_spawn))
         .add_startup_stage("plane_spawn_stage", SystemStage::single(plane_spawn))
         .add_startup_stage("sphere_spawn_stage", SystemStage::single(sphere_spawn))
         .add_system(compute_rt)
+        // .add_system(intersection)
+
         .run();
 }
 // set up a simple 3D scene
@@ -44,7 +54,11 @@ fn _setup(
 
     //Same for the meshings
     commands.insert_resource(Meshes {
-        sphere_mesh: meshes.add(Mesh::from(shape::UVSphere::default())),
+        sphere_mesh: meshes.add(Mesh::from(shape::Icosphere {
+            radius: 1.0,
+            subdivisions: 10,
+        })),
         plane_mesh: meshes.add(Mesh::from(shape::Plane { size: 5.0 })),
     });
 }
+
